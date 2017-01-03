@@ -1,0 +1,97 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings} 
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=3.0cm}
+\linespread{1.1}
+
+\numberwithin{equation}{section} 
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 2, Due Oct. 16, 2015}
+%\author{}
+%\date{}
+
+\maketitle
+
+
+For problems that include programming, please include the code and all outputted figures and tables.  Please label these clearly and refer to them appropriately in your answers to the questions.
+
+\begin{enumerate}
+
+\item Derive the Peano kernel for the midpoint rule on interval $[a,b]$ and show the error for the midpoint rule is
+$$
+E(f) = \frac{(b-a)^3}{24} f''(\xi), 
+$$
+where $\xi \in [a,b]$.
+
+\
+
+\item Prove that $(n+1)$-point Gauss quadrature is the only $(n+1)$-point quadrature rule with degree of precision $2n+1$. 
+
+\
+
+\item Suppose that an numerical quadrature $I_h(f)$ has the following asymptotic expansion
+$$
+I(f) - I_h(f) = c_1 h^{r_1} + c_2 h^{r_2} + c_3 h^{r_3} + \cdots
+$$
+Here $0<r_1<r_2 < r_3 < \cdots$ and $c_i$ are independent of $h$.  Assume that we have computed $I_h(f)$, $I_{h/2}(f)$, and $I_{h/4}(f)$.  Show how Richardson extrapolation can be used to the maximum extent to combine these values to get a higher order approximation to $I(f)$.  What is the order of the new approximation?
+
+\
+
+\item Write a code that uses adaptive composite Simpson's rule to approximate the integral 
+  \begin{equation*}
+    \int_1^{\pi} x^2 \sin x \mathrm{d}x.
+  \end{equation*}
+ Given the tolerance $\varepsilon = 10^{-8}$, report the approximation value.
+\end{enumerate}
+
+\end{document}

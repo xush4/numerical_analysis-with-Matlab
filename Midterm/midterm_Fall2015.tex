@@ -1,0 +1,131 @@
+\documentclass[12pt]{article}
+\textwidth=7.0in \oddsidemargin=-0.5in \evensidemargin=-0.5in
+\topmargin= -0.5in
+\textheight=8.5in
+
+\usepackage{amsmath, amsthm, amssymb, graphicx, epsfig}
+\usepackage{algorithmic,algorithm}
+
+
+%Equation commands
+
+\newcommand{\ul}{\underline}
+\newcommand{\bdm}{\begin{displaymath}}
+\newcommand{\edm}{\end{displaymath}}
+\newcommand{\beqas}{\begin{eqnarray*}}
+\newcommand{\eeqas}{\end{eqnarray*}}
+\newcommand{\bds}{\begin{description}}
+\newcommand{\eds}{\end{description}}
+
+%Symbols
+
+\newcommand{\CA}{{\cal A}}
+\newcommand{\CN}{{\cal N}}
+\newcommand{\CQ}{{\cal Q}}
+\newcommand{\CX}{{\cal X}}
+\newcommand{\CY}{{\cal Y}}
+
+\begin{document}
+\thispagestyle{empty}
+
+
+
+\begin{center}
+{\Large\bf Math 226   \hfill NUMERICAL ANALYSIS}\\[8mm]
+{\Large\bf  Midterm}\\[8mm]
+October 23, 2015 \hfill Due October 30, 2015\\[5mm]
+\end{center}
+
+\vspace{20mm} 
+
+%\begin{center}
+{\large \bf Show all of your work!!! For problems that include programming, please include the code and all outputted figures and tables.  Please label these clearly and refer to them appropriately in your answers to the questions.
+} 
+%\end{center}
+
+\vspace{20mm}
+
+\noindent{\bf NAME:\underline{\hspace{55mm}} }
+
+\vspace{16mm}
+
+\begin{center}
+\hspace{1in}
+\begin{tabular}{|c|c|@{\hspace{20mm}}r|}
+\hline
+\multicolumn{3}{|c|}{For Grading Only}\\
+\hline\hline
+\rule{0mm}{8mm}1& 20 & \\
+\hline
+\rule{0mm}{8mm}2& 15 &\\
+\hline
+\rule{0mm}{8mm}3& 20 &\\
+\hline
+\rule{0mm}{8mm}4& 15 &\\
+\hline
+\rule{0mm}{8mm}5& 30 &\\
+\hline
+\rule{0mm}{8mm}{\small $\sum$}&100 &\\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{20mm}
+
+\newpage
+\noindent
+
+\begin{enumerate}
+\item Let $f(x) = e^x$, $x \in [0,1]$, find the best $L^{\infty}$ approximations to $f$ in $\mathcal{P}_0([0,1])$ and $\mathcal{P}_1([0,1])$, respectively. ($\mathcal{P}_k([0,1])$ is the space of polynomials whose degree is at most $k$)
+
+\
+
+\item Let $f \in C^1([a,b])$, prove that the clamped cubic spline interpolation minimizes the quantity $\| g'' \|_{L^2([a,b])}$ among all functions $g \in C^2([a,b])$ which interpolate $f(x)$ at the $x_i$ and $f'(x)$ at $a$ and $b$.  (This implies that in a certain sense the cubic spline interpolant is the straightest, or smoothest, function satisfying the interpolations conditions).
+
+\
+
+\item Derive a numerical integration rule of $\int_{a}^b f(x) \mathrm{d}x$ based on the Hermit interpolation of $f(x)$ using the two end points $a$ and $b$.  Then derive the Peano kernel for the obtained numerical integration and estimate the error.  
+
+\
+
+\item Consider a perturbed linear system $(A+\delta A)(x+\delta x) = b + \delta b$.  If $\| \delta A \| \| A^{-1} \| < 1$, show that
+$$
+\frac{\| \delta x \|}{\|x \|} \leq \frac{\kappa(A)}{1-\kappa(A) \frac{ \| \delta A\|}{\| A \|}} \left(  \frac{\| \delta A \|}{\| A \|} + \frac{\| \delta b \|}{\| b \|} \right)
+$$
+
+\
+
+\item 
+\begin{enumerate}
+\item  Implement the LU factorization with partial pivoting ($PA = LU$).  The program should be a function that takes $A$ as the input and outputs $P$, $L$, $U$.  Test it with the following matrices
+\begin{equation*} \label{eqn:1}
+A = 
+\begin{pmatrix}
+2 & 1 & 2 \\
+1 & 2 & 3 \\
+4 & 1 & 2 
+\end{pmatrix}, 
+\
+A =
+\begin{pmatrix}
+10 & 1 & 1 \\
+1 & 10 & 1 \\
+1 & 1 & 20
+\end{pmatrix},
+\
+A = \texttt{hilb(5)},
+\
+A = \texttt{hilb(10)},
+\
+A = \texttt{hilb(20)}.
+\end{equation*}
+Report in each case $\frac{\| PA - LU \|_F}{\| L\|_F \| U \|_F}$ and $\frac{\| PA - LU \|_{F}}{\| A \|_F}$ and explain your results. (function \texttt{hilb(n)} in Matlab generates $n$-by-$n$ Hilbert matrix $A$ such that $a_{ij} = \frac{1}{i+j-1}$)
+
+\
+
+\item Implement the LU factorization with complete pivoting ($PAQ = LU$).  The program should be a function that takes $A$ as the input and outputs $P$, $Q$, $L$, $U$.  Test it with the above matrices, report $\frac{\| PAQ- LU \|_F}{\| L\|_F \| U \|_F}$ and $\frac{\| PAQ - LU \|_{F}}{\| A \|_F}$, and explain your results. 
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

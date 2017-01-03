@@ -1,0 +1,275 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=3.0cm}
+\linespread{1.1}
+
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 1}
+\author[]{Sheng Xu}
+%\date[]{2015.09.30}
+
+\maketitle
+
+
+\begin{enumerate}
+
+\item Bernstein polynomials
+\begin{enumerate}
+\item Proof: Linearity of Bernstein polynomials
+\begin{align*}
+B_n(\alpha f + \beta g) &=\sum_{k=0}^n (\alpha f (\frac{k}{n}) + \beta g (\frac{k}{n}) )
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k}\\
+&= \sum_{k=0}^n \alpha f (\frac{k}{n})
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k} + \sum_{k=0}^n \alpha g (\frac{k}{n})
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k}\\
+&= \alpha B_nf + \beta B_ng.
+\end{align*}
+\item Positive Operator: We first prove if $ f \geq g $, then $ B_nf \geq B_ng $. Then set $ g \equiv 0 $, we get $ B_ng=0 $. And we can prove that if $ f \geq 0 $ then $ B_nf \geq 0 $.
+\begin{align*}
+B_nf-B_ng &=\sum_{k=0}^n (f (\frac{k}{n}) - g (\frac{k}{n}) )
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k}
+\end{align*}
+Since $ f\geq g $, $ f-g\geq 0 $. With $ f-g\geq 0,
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+\geq 0,
+x\geq0,(1-x)\geq0$,
+We have $B_nf-B_ng\geq0$.\\
+Thus, we proved that if $ f \geq g $, then $ B_nf \geq B_ng $.\\
+Let's set $ g \equiv 0 $. We get $ B_ng=0 $. In that case, if $ f\geq0, B_nf \geq 0$.
+So $B_n$ is  positive operator.\\
+\item Let $f_0 = 1$, $f_1 = x$, and $f_2 = x^2$, show that $B_nf_0 = f_0$, $B_nf_1 = f_1$, and $B_nf_2 = \frac{n-1}{n}f_2 + \frac{1}{n} f_1$.\\
+\begin{align*}
+\mathcal{P}_n(I)=Span(1,x,x^2), f_0=1, f_1=x, f_2=x^2
+\end{align*}
+\begin{align*}
+B_nf_0 &=\sum_{k=0}^n
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k}
+=[x+(1-x)]^n=1=f_0\\
+B_nf_1 &=\sum_{k=0}^n\frac{k}{n}
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k}\\
+&=\sum_{k=1}^n\
+\begin{pmatrix}
+n-1 \\
+k-1
+\end{pmatrix}
+x^{k-1}(1-x)^{n-k}*x\\
+&=[x+(1-x)]^{n-1}*x=x=f_1\\
+B_nf_2 &=\sum_{k=0}^n\frac{k^2}{n^2}
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^{k}(1-x)^{n-k}\\
+&=\sum_{k=0}^n\frac{k^2-k+k}{n^2}
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^{k}(1-x)^{n-k}\\
+&=\sum_{k=0}^n\frac{k^2-k}{n^2}
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^{k}(1-x)^{n-k}+\sum_{k=0}^n\frac{k}{n^2}
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^{k}(1-x)^{n-k}\\
+&= \frac{n^2-n}{n^2}x^2\sum_{k=2}^n
+\begin{pmatrix}
+n-2 \\
+k-2
+\end{pmatrix}
+x^{k-2}(1-x)^{n-k}+\frac{1}{n}x\sum_{k=1}^n
+\begin{pmatrix}
+n-1 \\
+k-1
+\end{pmatrix}
+x^{k-1}(1-x)^{n-k}\\
+&=\frac{n-1}{n}x^2*[x+(1-x)]^{n-2}+\frac{1}{n}x*[x+(1-x)]^{n-1}\\
+&=\frac{n-1}{n}x^2+\frac{1}{n}x\\
+&=\frac{n-1}{n}f_2 + \frac{1}{n} f_1\\
+\end{align*}
+\end{enumerate}
+
+\item Proof: the Chebyshev Alternation Theorem
+\begin{enumerate}
+\item We first prove that "if $f-p^*$ achieves its maximun magnitude at $n+2$ distinct point with alternating sign, then $p^*$ is the best approximation."\\
+    We have proved Kolmogorov Characterization Theorem that Let $f \epsilon C(I)$ and P be a finite dimensional subspace of C(I), then $p^*$ in P is a best approximation to f if and only if no element of P has the same sign as $f-p^*$ on its extreme set.\\
+    So we can prove if no element of P has the same sign as $f-p^*$ on its extreme set, then $f-p^*$ achieves its maximun magnitude at $n+2$ distinct point with alternating sign. Here we can use contradiction to prove this easily.\\
+    $\forall q \epsilon \mathcal{P}_n$, $\therefore q=0$ has at most n roots.\\
+    If $[f-p^*]q>0$ and $f-p^*$ achieves its maximun magnitude at $n+2$ distinct point with alternating sign, q has to change its sign on alternative sets for $n+2$ times. According to the intermediate Value Theorem, q=0 will have n+1 roots, which is a contradiction.\\
+    Therefore, for any $q \epsilon \mathcal{P}_n$, $f-p^*$ does not have the same sign with q, which satisfies the Kolmogorov Characterization Theorem. Thus, $p^*$ is the best approximation.\\
+\item Now, We prove that "if p* is the best approximation, then $f-p^*$ achieves its maximun magnitude at $n+2$ distinct point with alternating sign."\\
+    If $f-p^*$ achieves its maximun magnitude at less than $n+2$ distinct point with alternating sign
+    So we set $m\leq n+1$\\
+    We construct 2 sets from the extreme set:
+\begin{align*}
+    \mathcal{Z}_\pm=\{x \epsilon [0,1]|f(x)-p*(x)=\pm\|f-p\|\}
+\end{align*}
+    Therefore, there exist an ordered set of m disjoint interval$\{K_i\},K_i=(k_{i-1},k_{i}),k_i\epsilon R$, which contains both $\mathcal{Z}_\pm$ and such that on adjacant intervals, the points from the extreme set belongs to $\mathcal{Z}_+$ and $\mathcal{Z}_-$ alternatively. (That means in every disjoint interval $K_i$, you can have one or several $x_i$ such that $[f(x_i)-p^*(x_i)]$ maintains the same sign while on the next interval $K_{i+1}$ you must have one or several elements $x_j$ bigger than max($x_i$) in the $K_i$ and $[f(x_j)-p^*(x_j)]$ do not have the same sign with those in $K_{i}$ ).Select one point $z_k$ ($k=1,2,\ldots,m$ since we have m alternating points.)from every adjacent sets $K_i$\\
+    In this case, we have $k_0<z_1<k_1<z_2<\ldots<k_{m-1}<z_{m}$, with which we can construct
+\begin{align*}
+    q=\Pi_{k=0}^n (x-k_i), i=1,2,\ldots,m-1.
+\end{align*}
+    since $m-1\leq n$, $q\epsilon \mathcal{P}_n$.\\
+    For this q (or -q), we'll have $[f-p^*]q>0$ (or $[f-p^*](-q)>0$) at extreme set, which reject Kolmogorov Characterization Theorem. Thus we prove p* is the best approximation leads to $f-p^*$ achieves its maximun magnitude at $n+2$ distinct point with alternating sign.\\
+\end{enumerate}
+
+\item Error Formula for the Hermite interpolation\\
+Proof: To simplify the function, let's define:
+\begin{align*}
+W(x)=\Pi_{k=0}^n(x-x_i)^2
+\end{align*}
+$\forall x in [a,b]$ and $x\neq x_i$, Here, we define an function
+\begin{align*}
+g(t)=f(t)- \mathcal{P}_{2n+1}(t)-\frac{f(x)-\mathcal{P}_{2n+1}(x)}{W(x)}W(t)
+\end{align*}
+If we take $2n+2$ derivatives of g(t), we have:
+\begin{align*}
+g^{(2n+2)}(t)=f^{(2n+2)}(t)-0-\frac{f(x)-\mathcal{P}_{2n+1}(x)}{W(x)}(2n+2)!
+\end{align*}
+So we need to find an $\xi$ such that $g^{(2n+2)}(\xi)=0$ to finish the proof.
+With the definition of Hermit interpolation:
+\begin{align*}
+f(x_i)= \mathcal{P}_{2n+1}(x_i), i=0,1,2,3,\ldots,n\\
+f'(x_i)=\mathcal{P}_{2n+1}'(x_i), i=0,1,2,3,\ldots,n
+\end{align*}
+Note that we have $n+2$ roots ($x,x_0,x_1,x_2,\ldots,x_n$) for $g(t)=f(t)- \mathcal{P}_{2n+1}(t)-\frac{f(x)-\mathcal{P}_{2n+1}(x)}{W(x)}W(t)$
+So with Rollers Rule, we can show there exist $\ell_k(k=0,1,\ldots,n)$ and $\ell_k\neq x_i $ (k=0,1,\ldots,n; i=0,1,\ldots,n) such that $g'(\ell_k)=0$\\
+With $g'(x_i)=0, i=0,1,2,3,\ldots,n$, we find $2n+2$ roots ($x_i, i=0,1,2,3,\ldots,n$ and $\ell_k, k=0,1,\ldots,n$) for g'(t)=0. With Rollers Rule, we can find an $\xi$, makes $g^{(2n+2)}(\xi)$=0. Since $\ell_k(k=0,1,\ldots,n)$ are related with $x_i( i=0,1,2,3,\ldots,n)$, So $\xi$ is related with $x_i( i=0,1,2,3,\ldots,n)$.\\
+Last, we take $g^{(2n+2)}(\xi)$=0 into the equation and solve for $f(x)-\mathcal{P}_{2n+1}(x)$
+\begin{align*}
+0=g^{(2n+2)}(t)=f^{(2n+2)}(t)-0-\frac{f(x)-\mathcal{P}_{2n+1}(x)}{W(x)}(2n+2)!
+\end{align*}
+We can get the conclusion.
+$$
+f(x) - p_{2n+1}(x) =\frac{1}{(2n+2)!} f^{(2n+2)}(\xi) \left[(x-x_{0}) (x-x_{1}) \cdots (x-x_{n})\right]^2,
+$$
+\item Error Formula for the Hermite interpolation\\
+ Let $I = [-1,1]$ and $\mathcal{P}_n(I)$ be the space of polynomial functions of degree at most $n$ on $I$. For any $q \in \mathcal{P}_n(I)$, show that $\| q \|_{\infty} \leq K(n) \| q \|_2$ with $K(n) = \frac{n+1}{\sqrt{2}}$.\\
+ Proof: we define $\{\phi_n\}$ as the Lagendre polynomials, which is an orthogonal basis of the Polynomial space $L^2$ with the property:\\
+$ \|\phi_n\|_{C(I)}=1$\\
+$(\phi_m,\phi_n)_{L^2(I)}=\frac{1}{(2n+1)}\delta_{mn}$\\
+For $q \epsilon P_n$, we can expand $q$ with Lagendre polynomials, let $q=\sum_{i=1}^n \alpha_i\cdot \phi_i$.
+ So we have
+$\|q\|_{L^2(I)}= \sum_{i=1}^n \frac{1}{(2n+1)}\|\alpha_i\|^2\\$
+\begin{align*}
+\|q\|_\infty &=\|\sum_{i=1}^n a_i\phi_i\| \leq \sum_{i=1}^n\|a_i\|\|\phi_i\|\\
+&\leq \sum_{i=1}^n\|a_i\|\ (Because |\phi_i\|<1)\\
+&=\sum_{i=1}^n\|a_i\|\sqrt{\frac{2}{2i+1}}\sqrt{\frac{2i+1}{2}}\\
+&=\sqrt {\sum_{i=1}^n a_i^2 \frac{2}{2i+1}}\sqrt{\sum_{i=1}^n \frac{2i+1}{2}} (By Cauchy-Schwarz)\\
+&=\|q\|_2^2\sqrt{\frac{n(n+2)}{2}}=\|g\|_2^2\sqrt{\frac{n^2+2n}{2}}\\
+&\leq \|g\|_2^2\sqrt{\frac{(n^2+2n+1)}{2}}\\
+&=\|q\|_2^2 K(n)
+\end{align*}
+\item Consider the function $f(x) = \frac{1}{1+x^2}$. Write codes to find the piecewise linear polynomial interpolation and clamped cubic spline to approximate $f(x)$ on $[-5,5]$ with equally distributed points of mesh size $h$.  Plot the approximations and observe how the errors change when the mesh size $h$ decreases.\\
+    Result:¡¡From both table we can figure out that the error increases with h. The smaller h is, the more accurate the interpolation will be. The interpolation of Cubic Spline seem to be much more accurate than the piecewise linear polynomial interpolation, though the piecewise linear polynomial interpolation is also quite accurate when n grows much bigger.\\
+\begin{center}
+\bf{Table 3-1 Relationship between mesh size h and Error of infinity norm of Piecewise Linear Approximation}
+\end{center}
+\tabcolsep0.215in
+\begin{tabular}{|ccccccc|}
+\hline
+$h$&2&1&0.5&0.2&0.1&0.05\\
+\hline
+$error$&0.50&0.067&0.042&0.0093&0.0025&0.00062\\
+\hline
+\end{tabular}
+\\
+\begin{center}
+\bf{Table 3-2 Relationship between mesh size h and Error of infinity norm of Cubic Spline}
+\end{center}
+\tabcolsep0.17in
+\begin{tabular}{|ccccccc|}
+\hline
+$h$&2&1&0.5&0.2&0.1&0.05\\
+\hline
+$error1$&0.43&0.022&0.0032&0.00011&0.0000065&0.00000049\\
+\hline
+$error2$&0.42&0.022&0.0032&0.00011&0.0000065&0.00000049\\
+\end{tabular}
+£¨Error1 is the error from plug-in function of Matlab, Error 2 is the function of mine£©
+\end{enumerate}
+\end{document}

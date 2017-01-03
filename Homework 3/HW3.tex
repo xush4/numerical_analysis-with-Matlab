@@ -1,0 +1,141 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings} 
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=1in}
+\linespread{1.1}
+
+\numberwithin{equation}{section} 
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 3, Due Nov. 13, 2015}
+%\author{}
+%\date{}
+
+\maketitle
+
+
+For problems that include programming, please include the code and all outputted figures and tables.  Please label these clearly and refer to them appropriately in your answers to the questions.
+
+\
+
+
+\begin{enumerate}
+
+\item Show that Jacobi method converges for all $2$ by $2$ symmetric positive definite matrices. 
+
+\
+
+\item \begin{enumerate}
+	\item Implement (all the programs should be functions that take matrix $A$, right hand side $b$, initial guess $x^0$, tolerance and maximal number of iterations as input arguments and output the approximate solution and number of iterations): 
+		\begin{enumerate}
+		\item Richardson method
+		\item Jacobi method
+		\item Guass-Seidel method
+		\item Successive Overrelaxation (SOR) method
+		\end{enumerate}
+ 	\item Consider the following $n \times n$ system:
+		$$\left(%
+	\begin{array}{ccccc}
+	  2 & -1 &  &  &  \\
+	  -1 & 2 & -1 &  &  \\
+	   & \ddots & \ddots & \ddots &  \\
+	   &  & -1 & 2 & -1 \\
+	   &  &  & -1 & 2 \\
+	\end{array}%
+	\right)
+	\left(%
+	\begin{array}{c}	
+	  x_1 \\
+	   \\
+	   \vdots\\
+	   \\
+	  x_n \\
+	\end{array}%
+	\right)=
+	\left(%
+	\begin{array}{r}
+	  1 \\
+	  0 \\
+	  \vdots \\
+	  0 \\
+	  -1 \\
+	\end{array}%
+	\right), 
+	$$	
+	for  $n=2^l$, $l=4,5,6,7,8$. Use the programs above to solve it until $|| b - A x^k ||_2/ ||b||_2 < 10^{-6}$. Make a table to report the number of iterations of each iterative method and discuss the results.  For Richardson method and SOR, please try different values of $\omega$ and discuss how the results depends on the choice of $\omega$.
+	\end{enumerate}
+	
+\
+
+\item Verify the Shern-Morrison-Woodbury formula. If $\widetilde{\mathbf{A}} = \mathbf{A} + \mathbf{uw}^{T}$, then
+$$
+\widetilde{\mathbf{A}}^{-1} = \mathbf{A}^{-1} - \frac{1}{1+\mathbf{w}^{T} \mathbf{A}^{-1} \mathbf{u}} \mathbf{A}^{-1} \mathbf{u w}^{T} \mathbf{A}^{-1}
+$$
+
+
+\
+
+\item Consider
+\vskip -20pt
+\begin{align*}
+x_{1}^{2} + x_{2}^{2} &= 1 \\
+(x_{1}-1)^{2} + x_{2}^{2} & =1 
+\end{align*}
+\begin{enumerate}
+\item Implement Newton's Method and find all solutions. 
+\item Implement Broyden I Method and use $B_{0} = I$ to find all solutions.
+\item Implement Broyden II Method and use $H_{0} = I$ to find all solutions.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

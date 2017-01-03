@@ -1,0 +1,151 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=1in}
+\linespread{1.1}
+
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 4, Due Dec. 11, 2015}
+%\author{}
+%\date{}
+
+\maketitle
+
+
+For problems that include programming, please include the code and all outputted figures and tables.  Please label these clearly and refer to them appropriately in your answers to the questions.
+
+\
+
+
+\begin{enumerate}
+
+\item Derive an explicit linear 2-step method of order 3 and discuss its consistency, stability, and convergence.
+\
+Recall 2-step Explicit Method has the following form:\
+\begin{align*}
+y_{n+1}=-a_0y_n-a_1y_{n-1}+h(b_0f_n+b_1f_{n-1})
+\end{align*}\
+Now if we want it to be consistent under order 3, we have the following 4 equation corresponding to m=0,1,2,3:
+\begin{align*}
+1+a_0+a_1=0\\
+1-a_1-b_0+b_1=0\\
+1+a_1-2b_1=0\\
+1-a_1-3b_1=0\\
+\end{align*}\
+When we solve the equation, we get:
+\begin{align*}
+a_0=4\\
+a_1=-5\\
+b_0=4\\
+b_1=2\\
+\end{align*}\
+So the 2-step order 3 method we get is $y_{n+1}=-4y_n+5y_{n-1}+h(4f_n+2f_{n-1})$ and it is consistent.\
+However with root condition, we know its characteristic function is $\xi^2+4\xi-5=0$, which means $\xi_1=1,\xi_2=-5$. Thus $|\xi_2|>1$, meaning it is not stable and convergent.
+\
+
+\item Derive the most general two-stage Runge-Kutta method of order 2.\\
+We use Taylor expansion for $y_{n+1}$: (Note $f_n=f(t_n,y_n)$)
+\begin{align*}
+y_{n+1}&=y_n+hy^{'}_n+\frac{1}{2}h^2y^{''}_n+o(h^3)\\
+&=y_n+hf_n+\frac{1}{2}h^2[\frac{\partial f}{\partial t}_n+\frac{\partial f}{\partial y}_nf_n]+o(h^3)\bigotimes
+\end{align*}\\
+If we consider the R-K method $y_{n+1}=y_n+h\omega_1K_1+h\omega_2K_2$ with $K_1=f_n$, $K_2=f(t_n+hc_2,f_n+h\alpha_{21}K_1)=f_n+hc_2\frac{\partial f}{\partial t}_n+h\alpha_{21}\frac{\partial f}{\partial y}f_n+o(h^3)$ and set $c_1=0$\\
+\begin{align*}
+y_{n+1}&=y_n+h\omega_1 f_n + h\omega_2 [f_n+hc_2\frac{\partial f}{\partial t}_n+h\alpha_{21}\frac{\partial f}{\partial y}f_n]+o(h^3)\\
+&=y_n+h(\omega_1+\omega_2)f_n+h^2[\omega_2 c_2\frac{\partial f}{\partial t}_n+\omega_2 \alpha_{21}\frac{\partial f}{\partial y}_nf_n]+o(h^3)
+\end{align*}\\
+Let's set $\alpha_{21}=\alpha$ and compare the equation with $\bigotimes$ above. We will have:\\
+\begin{align*}
+&\omega_1+\omega_2=1\\
+&\omega_2 c_2=\frac{1}{2}\\
+&\omega_2 \alpha_{21}=\frac{1}{2}
+\end{align*}\\
+Thus,\\
+\begin{align*}
+&\omega_1=1-\frac{1}{2\alpha}\\
+&\omega_2=\frac{1}{2\alpha}\\
+&c_2=\alpha
+\end{align*}\\
+Therefore, we get:$y_{n+1}=y_n+h[(1-\frac{1}{2\alpha})K_1+\frac{1}{2\alpha}K_2]$, where $K_1=f_n=f(t_n,y_n)$, $K_2=f(t_n+\alpha h,y_n+\alpha h K_1)$\\
+\
+
+\item Implement the forward Euler method, backward Euler method, Crank-Nicolson method, and Runge-Kutta 4-stage (RK4) method and apply them to solve the following ODE problem, respectively.
+$$
+\begin{cases}
+&y'(t) = 6y(t) - 6y(t)^2, \quad t \in (0, 20]\\
+&y(0) = 0.5
+\end{cases}
+$$
+Using $h=0.5,\ 0.25,\ 0.1$ to compute the approximate solution of each method. Plot the approximate solutions on the time interval $[0,20]$ and explain your observations from the numerical experiments.\\
+From the observation we can conclude that:\\
+\begin{center}
+\bf{Table 3-1 Relationship between Method and Convergence under certain h}
+\end{center}
+\tabcolsep0.2in
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Method&Forward Euler&Backward Euler&C-N&RK4\\
+\hline
+$h=0.50$&F&F&F&TF\\
+\hline
+$h=0.25$&T&F&T&T\\
+\hline
+$h=0.10$&T&T&T&T\\
+\hline
+\end{tabular}
+\\	
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,111 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=3.0cm}
+\linespread{1.1}
+
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 1, Due Oct. 2, 2015}
+%\author{}
+%\date{}
+
+\maketitle
+
+
+For problems that include programming, please include the code and all outputted figures and tables.  Please label these clearly and refer to them appropriately in your answers to the questions.
+
+\begin{enumerate}
+
+\item Consider the Bernstein polynomials, for $f \in C(I)$, $I = [0,1]$, $n=1,2,\cdots$,
+$$
+B_nf(x) = \sum_{k=0}^n f (\frac{k}{n})
+\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+x^k(1-x)^{n-k}
+$$
+\begin{enumerate}
+\item Show that the operator $B_n: C(I) \mapsto \mathcal{P}_n(I)$ is linear, where $\mathcal{P}_n(I)$ is the space of polynomial functions of degree at most $n$ on $I$.
+\item Show that $B_n$ is a positive operator, i.e. if $f(x) \geq 0$ on $I$, then $B_nf(x)\geq 0$ on $I$.
+\item Let $f_0 = 1$, $f_1 = x$, and $f_2 = x^2$, show that $B_nf_0 = f_0$, $B_nf_1 = f_1$, and $B_nf_2 = \frac{n-1}{n}f_2 + \frac{1}{n} f_1$.
+\end{enumerate}
+
+\
+
+\item Prove the Chebyshev Alternation Theorem.
+
+\
+
+\item Derive the error formula for the Hermite interpolation $p_{2n+1}$ on $I$, i.e.
+$$
+f(x) - p_{2n+1}(x) =\frac{1}{(2n+2)!} f^{(2n+2)}(\xi) \left[(x-x_{0}) (x-x_{1}) \cdots (x-x_{n})\right]^2,
+$$
+where $\xi \in I$ is a point determined by the $x, x_0, \cdots, x_n$.
+
+\
+
+\item Let $I = [-1,1]$ and $\mathcal{P}_n(I)$ be the space of polynomial functions of degree at most $n$ on $I$. For any $q \in \mathcal{P}_n(I)$, show that $\| q \|_{\infty} \leq K(n) \| q \|_2$ with $K(n) = \frac{n+1}{\sqrt{2}}$.
+
+\
+
+\item Consider the function $f(x) = \frac{1}{1+x^2}$. Write codes to find the piecewise linear polynomial interpolation and clamped cubic spline to approximate $f(x)$ on $[-5,5]$ with equally distributed points of mesh size $h$.  Plot the approximations and observe how the errors change when the mesh size $h$ decreases.
+
+\
+
+\item \textbf{(Optional)} If you are only allowed to use no more than $200$ points in $[-5,5]$ to approximate $f(x) = \frac{1}{1+x^2}$ by the piecewise linear polynomial interpolation, design a strategy to distribute the points and make the error in $L_{\infty}$-norm as small as possible. Implement and report your error.
+
+\end{enumerate}
+
+\end{document}

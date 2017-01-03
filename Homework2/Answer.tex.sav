@@ -1,0 +1,237 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=3.0cm}
+\linespread{1.1}
+
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 2, Due Oct. 16, 2015}
+\author{Sheng Xu}
+%\date{}
+
+\maketitle
+
+
+\begin{enumerate}
+
+\item Derive the Peano kernel for the midpoint rule on interval $[a,b]$ and show the error for the midpoint rule is
+$$
+E(f) = \frac{(b-a)^3}{24} f''(\xi),
+$$
+where $\xi \in [a,b]$.
+
+\
+Proof: Note that for Midpoint Rule $k=1$,
+So we can define function using Taylor Expansion:\\
+  \begin{align*}
+  f(x)&=p_1(x)+\int_a^x f^{''}(t)(x-t)^2 \mathrm{d}t\\
+  &=p_1(x)+\int_a^b f^{''}(t)(x-t)_+^2 \mathrm{d}t\\
+  \end{align*}
+Where $(x-t)_+$ is defined as:
+  \begin{align*}
+    (x-t)_+=
+   \begin{cases}
+   0, &\mbox{if $x< t$}\\
+   x-t, &\mbox{if $x\geq t$}
+   \end{cases}
+  \end{align*}
+
+Now define $R(x)$ as:
+\begin{align*}
+R(x)=\int_a^b f^{''}(t)(x-t)_+^2 \mathrm{d}t
+\end{align*}
+Thus, now we have $f(x)=p_1(x)+R(x)$. And if we continue to calculate $E(f)$\\
+  \begin{align*}
+  E(f)&=\int_a^b f(x) \mathrm{d}t-\frac {b-a}{2}f(\frac{b+a}{2})\\
+  &=E(p_1+R)=E(R)\\
+  E(R)&=E[\int_a^b f^{''}(t)(x-t)_+^2 \mathrm{d}t]\\
+  &=\int_a^b f^{''}(t)[\int_a^b (x-t)_+^2 \mathrm{d}x]\mathrm{d}t-\int_a^b f^{''}(t)\sum w_i(x_i-t)_+\mathrm{d}t\\
+  &=\int_a^b f^{''}(t)[\int_a^b (x-t)_+^2 \mathrm{d}x-\sum w_i(x_i-t)_+]\mathrm{d}t
+  \end{align*}
+So we can derived the Peano kernel $K(t)$ with $b\geq t\geq a$
+\begin{align*}
+K(t)&=\int_a^b (x-t)_+^2 \mathrm{d}x-\sum w_i(x_i-t)_+\\
+&=\frac {1}{2}(b-t)^2-(b-a)(\frac{b+a}{2}-t)_+\\
+\end{align*}
+Now we need to discuss the situation $a\leq t\leq \frac{b+a}{2}$ and $\frac{b+a}{2}<t\leq b$.\\
+For $a\leq t\leq \frac{b+a}{2}$:
+\begin{align*}
+K(t)&=\frac {1}{2}(b-t)^2-(b-a)(\frac{b+a}{2}-t)\\
+&=\frac {1}{2}[(b-t)^2-(b-a)(b+a-2t)]\\
+&=\frac {1}{2}(t-a)^2
+\end{align*}
+For $\frac{b+a}{2}<t\leq b$:
+\begin{align*}
+K(t)&=\frac {1}{2}(b-t)^2
+\end{align*}
+Therefore,
+\begin{align*}
+    K(t)=
+   \begin{cases}
+   \frac {1}{2}(t-a)^2, &\mbox{if $a\leq t\leq \frac{b+a}{2}$}\\
+   \frac {1}{2}(b-t)^2, &\mbox{if $\frac{b+a}{2}<t\leq b$}
+   \end{cases}
+\end{align*}
+Finally, Let's Calculate $E(f)$:
+\begin{align*}
+E(f)&=E(R)=\int_a^b f^{''}(t) K(t)\mathrm{d}t\\
+\end{align*}
+With Intermediate Value Theorem,
+\begin{align*}
+E(f)&=f^{''}(\xi) \int_a^b K(t)\mathrm{d}t \\
+&\mbox{$\xi\epsilon(a,b)$}\\
+\therefore E(f)&=f^{''}(\xi) [\int_a^{\frac{b+a}{2}}\frac {1}{2}(t-a)^2 \mathrm{d}t+\int_{\frac{b+a}{2}}^b\frac {1}{2}(b-t)^2 \mathrm{d}t]\\
+&=\frac {1}{2}f^{''}(\xi) [ \frac {1}{3}(\frac{b-a}{2})^3+\frac {1}{3}(\frac{b-a}{2})^3]\\
+&= \frac{(b-a)^3}{24} f''(\xi)\\
+&\mbox{(where $\xi\epsilon(a,b)$)}\\
+\end{align*}
+\
+\item Prove that $(n+1)$-point Gauss quadrature is the only $(n+1)$-point quadrature rule with degree of precision $2n+1$.
+
+\
+Proof: Suppose We have $n+1$ distinguished point in $[a,b]$ which are $a\leq x_1<x_2<\ldots < x_n\leq b$
+So we compose a function $\phi(x) =\Pi_{i=0}^n(x-x_i)$
+Now we find an $f(x)\epsilon P_{2n+1}$
+Using Dividing Rule of polymers, we can find $q(x)$ and $R(x)$ from $P_n$ which makes $f(x)=q(x)\phi(x)+R(x)$
+Thus the integration of f can be written as:
+\begin{align*}
+\int_a^b f(x)\mathrm{d}x&=\int_a^b q(x)\phi(x)+R(x)\mathrm{d}x
+=\int_a^b q(x)\phi(x)\mathrm{d}x+ \int_a^b R(x)\mathrm{d}x
+\end{align*}
+Since the precision is $2n+1$
+\begin{align*}
+\int_a^b f(x)\mathrm{d}x&=\sum_{i=0}^n w_i f(x_i) &\mbox{$w_i$ is defined by Legendre}\\
+&= \sum_{i=0}^n w_i q(x_i)\phi(x_i)+\sum_{i=0}^n w_i R(x_i)\\
+&= \sum_{i=0}^n w_i R(x_i)  &\mbox{$\phi(x_i)=0 $ for $ i=0,1,\ldots, n $}
+\end{align*}
+Since $R(x)\epsilon P_n$, we will have $\int_a^b R(x)\mathrm{d}x = \sum_{i=0}^n w_i R(x_i) $, which leads to:
+\begin{align*}
+\int_a^b q(x)\phi(x)=0
+\end{align*}
+Note that $\phi(x)$ can be written into the form with Legendre Basis ${\L}_i(x)$, where:
+\begin{align*}
+\phi(x)=\sum_{i=0}^{n+1} a_i {\L}_i(x)
+\end{align*}
+Now we define an $T(x)$ on $P_n$:
+\begin{align*}
+T(x)=\sum_{j=0}^n {\L}_j(x)
+\end{align*}
+Note that:
+\begin{align*}
+ \int{\L}_i(x) {\L}_j(x)\mathrm{d}x=
+ \begin{cases}
+   0, &\mbox{if $i\neq j$}\\
+   \parallel {\L}_i(x) \parallel^2, &\mbox{if $i = j$}
+   \end{cases}
+\end{align*}
+Hence we will have:
+\begin{align*}
+&0=\int_a^b T(x)\phi(x)\mathrm{d}x=\sum_{i=0}^n a_i \parallel {\L}_i(x) \parallel^2\\
+&\Rightarrow a_i=0;(i=0,1,\ldots, n)\\
+&\Rightarrow \phi(x)=a_{n+1} {\L}_{n+1}(x)\\
+\end{align*}
+So we proved that $\phi(x)$ has to be the $(n+1)$-degree Legendre Polynomial times a real number. With the restriction on the coefficient of highest degree$x^{n+1}$ equals to 1, we can get a unique polynomial, which satisfies Gauss Quadrature. Thus we get the conclusion.
+\
+\item Suppose that an numerical quadrature $I_h(f)$ has the following asymptotic expansion
+$$
+I(f) - I_h(f) = c_1 h^{r_1} + c_2 h^{r_2} + c_3 h^{r_3} + \cdots
+$$
+Here $0<r_1<r_2 < r_3 < \cdots$ and $c_i$ are independent of $h$.  Assume that we have computed $I_h(f)$, $I_{h/2}(f)$, and $I_{h/4}(f)$.  Show how Richardson extrapolation can be used to the maximum extent to combine these values to get a higher order approximation to $I(f)$.  What is the order of the new approximation?\\
+Proof:¡¡We define:
+\begin{align*}
+&E_h^0=I(f) - I_h(f) = c_1 h^{r_1} + c_2 h^{r_2} + c_3 h^{r_3} + \cdots \oplus\\
+&E_{\frac {h}{2}}^0=I(f) - I_{\frac {h}{2}}(f)= c_1 (\frac {h}{2})^{r_1} + c_2 (\frac {h}{2})^{r_2} + c_3 (\frac {h}{2})^{r_3} + \cdots \otimes\\
+&E_{\frac {h}{4}}^0=I(f) - I_{\frac {h}{4}}(f)= c_1 (\frac {h}{4})^{r_1} + c_2 (\frac {h}{4})^{r_2} + c_3 (\frac {h}{4})^{r_3} + \cdots \odot\\
+\end{align*}
+Then we get rid of $h^{r_1}$:
+\begin{align*}
+&2^{r_1}\otimes-\oplus:\\
+&(2^{r_1}-1)I(f)-[2^{r_1}I_{\frac {h}{2}}(f)-I_h(f)]=c_2(2^{r_1}-2^{r_2})(\frac {h}{2})^{r_2} + c_3 (2^{r_1}-2^{r_3})(\frac {h}{2})^{r_3}+ \cdots\\
+&2^{r_1}\odot-\otimes:\\
+&(2^{r_1}-1)I(f)-[2^{r_1}I_{\frac {h}{4}}(f)-I_{\frac {h}{2}}(f)]=c_2(2^{r_1}-2^{r_2})(\frac {h}{4})^{r_2} + c_3 (2^{r_1}-2^{r_3})(\frac {h}{4})^{r_3}+ \cdots\\
+\end{align*}
+Again we define 
+\begin{align*}
+&E_{\frac {h}{2}}^1=I(f)-\frac{2^{r_1}I_{\frac {h}{2}}(f)-I_h(f)}{2^{r_1}-1}
+&E_{\frac {h}{4}}^1=I(f)-\frac{2^{r_1}I_{\frac {h}{4}}(f)-I_{\frac {h}{2}}(f)}{2^{r_1}-1}
+\end{align*}
+And get rid of $h^{r_2}$: 
+\begin{align*}
+&2^{r_2}E_{\frac {h}{4}}^1-E_{\frac {h}{2}}^1=\frac{1}{2^{r_1}-1}[c_3 (2^{r_1}-2^{r_3})(2^{r_2}-2^{r_3})(\frac {h}{4})^{r_3}+ \cdots]
+\end{align*}
+Still we can define:
+\begin{align*}
+E_{\frac {h}{4}}^2&=\frac{1}{2^{r_2}-1}[2^{r_2}E_{\frac {h}{4}}^1-E_{\frac {h}{2}}^1]\\
+&=I(f)-\frac{2^{r_1+r_2}I_{\frac {h}{4}}(f)-(2^{r_1}+2^{r_2})I_{\frac {h}{2}}(f)+I_h}{(2^{r_1}-1)(2^{r_2}-1)}\\
+&=\frac{1}{(2^{r_1}-1)(2^{r_2}-1)}[c_3 (2^{r_1}-2^{r_3})(2^{r_2}-2^{r_3})(\frac {h}{4})^{r_3}+ \cdots]\\
+\end{align*}
+So the higher order approximation we get is:
+\begin{align*}
+\frac{2^{r_1+r_2}I_{\frac {h}{4}}(f)-(2^{r_1}+2^{r_2})I_{\frac {h}{2}}(f)+I_h}{(2^{r_1}-1)(2^{r_2}-1)}
+\end{align*}
+The order of error is $r_3$ with coefficient for $h^{r_3}$ of:
+\begin{align*}
+\frac{1}{(2^{r_1}-1)(2^{r_2}-1)4^{r_3}}[c_3 (2^{r_1}-2^{r_3})(2^{r_2}-2^{r_3})]
+\end{align*}
+\
+
+\item Write a code that uses adaptive composite Simpson's rule to approximate the integral
+  \begin{equation*}
+    \int_1^{\pi} x^2 \sin x \mathrm{d}x.
+  \end{equation*}
+ Given the tolerance $\varepsilon = 10^{-8}$, report the approximation value.\\
+ Answer: 5.646360126534591 with recursive method.\\
+ For cursive method, we need to calculate the error under Simpson's rule in interval$(a,b)$ with mid point $c$: $|I_a^c+I_c^b-I_a^b|<=15*eps*(b-a)$. When it is satisfied, we calculate it Integration approximately with Simpson method:$I=I_a^c+I_c^b$ and add $I$ into the sum using the code :$sumI=sumI+I$. If the condition is not satisfied, we continue to divide the interval until it is satisfied and add all the value to "SumI". Then we can out sumI as the result. 
+\end{enumerate}
+\end{document}

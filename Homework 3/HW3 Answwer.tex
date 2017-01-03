@@ -1,0 +1,309 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{epsf}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{algorithmic,algorithm}
+\usepackage[notcite,notref]{showkeys}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amscd}
+\usepackage[pdftex]{color} % black,white,red,green,blue,cyan,magen ta,yellow
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{graphicx,pst-eps,epstopdf}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{amsmath, amsfonts, amssymb,mathrsfs}
+\usepackage{subfigure,pstricks,pst-node}
+\usepackage{pst-eps,epstopdf}
+\usepackage{verbatim}
+%\usepackage{showkeys}
+
+\newenvironment{plan}
+{\bigskip\hrule\bigskip\centerline{\bf PLAN}\begin{quote}\tt}
+{\end{quote}\bigskip\hrule\bigskip}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={},    % title
+    pdfauthor={Xiaozhe Hu},     % author
+    pdfsubject={},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\geometry{letterpaper, margin=1in}
+\linespread{1.1}
+
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\numberwithin{algorithm}{section}
+
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title[]{Math 226, Homework 3, Due Nov. 13, 2015}
+\author{} Sheng Xu
+%\date{}
+
+\maketitle
+
+
+For problems that include programming, please include the code and all outputted figures and tables.  Please label these clearly and refer to them appropriately in your answers to the questions.
+
+\
+
+
+\begin{enumerate}
+
+\item Show that Jacobi method converges for all $2$ by $2$ symmetric positive definite matrices.\\
+Proof: Let $A=$
+$\left(
+    \begin{array}{ccccc}
+	  a & b \\
+	  b & c\\
+	\end{array}
+	\right)$
+Therefore:\
+$$D=\left(
+    \begin{array}{ccccc}
+	  a &  \\
+	    & c\\
+	\end{array}
+	\right)$$ ;
+$$R=\left(
+    \begin{array}{ccccc}
+	    & b\\
+	  b &  \\
+	\end{array}
+	\right)$$\
+We know that if we want the method to be convergent, $\rho(I_n-BA)<1$, which is $\rho(I_n-D^{-1}A)<1$.
+Therefore, since:
+\begin{align*}
+I_n-D^{-1}A=D^{-1}(D-A)=-D^{-1}R
+\end{align*}
+We have $\rho(I_n-D^{-1}A)=\rho(-D^{-1}R)=\rho(D^{-1}R)$. Hence, the method is convergent if $\rho(D^{-1}R)<1$.\\
+Since A is a symmetric positive definite matric, $ac-b^2>0$. Thus $0<\frac{b^2}{ac}<1$. Now Let's compute $D^{-1}R$:\
+\begin{align*}
+D^{-1}R
+=\left(
+    \begin{array}{ccccc}
+	  a^{-1} &  \\
+	    & c^{-1}\\
+	\end{array}
+	\right) \cdot
+    \left(
+    \begin{array}{ccccc}
+	    & b \\
+	  b &  \\
+	\end{array}
+	\right)
+=\left(
+    \begin{array}{ccccc}
+	    & \frac{b}{a} \\
+	  \frac{b}{c} &  \\
+	\end{array}
+	\right)
+\end{align*}\
+Now we try to calculate the eigenvalues of $D^{-1}R$ where $|\lambda I_2-D^{-1}R|=0$\
+Thus $\lambda ^2= \frac{b^2}{ac}<1$, which means the absolute value of every eigenvalue is less than $1$.
+Hence, $\rho(D^{-1}R)<1 $, which means Jacobi method converges.
+\\
+
+\item \begin{enumerate}
+	\item Implement (all the programs should be functions that take matrix $A$, right hand side $b$, initial guess $x^0$, tolerance and maximal number of iterations as input arguments and output the approximate solution and number of iterations):
+		\begin{enumerate}
+		\item Richardson method
+		\item Jacobi method
+		\item Guass-Seidel method
+		\item Successive Overrelaxation (SOR) method
+		\end{enumerate}
+ 	\item Consider the following $n \times n$ system:
+		$$\left(%
+	\begin{array}{ccccc}
+	  2 & -1 &  &  &  \\
+	  -1 & 2 & -1 &  &  \\
+	   & \ddots & \ddots & \ddots &  \\
+	   &  & -1 & 2 & -1 \\
+	   &  &  & -1 & 2 \\
+	\end{array}%
+	\right)
+	\left(%
+	\begin{array}{c}	
+	  x_1 \\
+	   \\
+	   \vdots\\
+	   \\
+	  x_n \\
+	\end{array}%
+	\right)=
+	\left(%
+	\begin{array}{r}
+	  1 \\
+	  0 \\
+	  \vdots \\
+	  0 \\
+	  -1 \\
+	\end{array}%
+	\right),
+	$$	
+	for  $n=2^l$, $l=4,5,6,7,8$. Use the programs above to solve it until $|| b - A x^k ||_2/ ||b||_2 < 10^{-6}$. Make a table to report the number of iterations of each iterative method and discuss the results.  For Richardson method and SOR, please try different values of $\omega$ and discuss how the results depends on the choice of $\omega$.
+	\end{enumerate}
+\begin{center}
+\bf{Table 2-1 Relationship between numbers of iteration and method}
+\end{center}
+\tabcolsep0.2in
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Method&$Richardson$&$Jacobi$&$Gauss-seidel$&$SOR$\\
+\hline
+Times($i=4$)&644&644&909&668\\
+\hline
+Times($i=5$)&2217&2217&3090&2216\\
+\hline
+Times($i=6$)&7741&7741&10666&7576\\
+\hline
+Times($i=7$)&27033&27033&36780&26091\\
+\hline
+Times($i=8$)&93463&93463&125163&89216\\
+\hline
+\end{tabular}
+\\	
+Where the $w_{Richardson}=\frac{2}{\lambda_{min}(A)+\lambda_{max}(A)}$, $w_{SOR}=\frac{2}{1+\sqrt{1-\rho(I-D^{-1}A)^2}}$.\\
+From the table we can conclude that with the optional value of $w_{Richardson}$ given in class, the method of Richardson iteration seem to be as efficient as Jacobi method. When we check their B matrixes, they are the same with this particular A matrix given. The Gauss-Seidel method seems to converge slowly in this example, and SOR method seems to converge a little more quickly than Jacobi and Richardson.
+\
+\begin{center}
+\bf{Table 2-2 Relationship between numbers of iteration and w for Richardson}
+\end{center}
+\tabcolsep0.2in
+\begin{tabular}{|c|c|c|c|}
+\hline
+w&$wR_1$&$wR_2$&$wR_3$\\
+\hline
+Times($i=4$)&1161&1247&644\\
+\hline
+Times($i=5$)&3971&4281&2217\\
+\hline
+Times($i=6$)&13699&14888&7741\\
+\hline
+Times($i=7$)&47050&51727&27033\\
+\hline
+Times($i=8$)&159092&177648&93463\\
+\hline
+\end{tabular}
+\\
+Where the $wR_{1}=\frac{1}{\lambda_{max}(A)}$, $wR_{2}=\frac{2}{\lambda_{min}(A)+0.5\lambda_{max}(A)}$, $wR_{3}=\frac{2}{\lambda_{min}(A)+\lambda_{max}(A)}$\
+We do not spot a better convergence in the table than the given $w=\frac{2}{\lambda_{min}(A)+\lambda_{max}(A)}$	in class. Also if we choose bigger w($w=\frac{3}{\lambda_{max}(A)}$), the method may not converge.\\
+\begin{center}
+\bf{Table 2-3 Relationship between numbers of iteration and w for SOR}
+\end{center}
+\tabcolsep0.2in
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+w&$wSOR_1$&$wSOR_2$&$wSOR_3$&$3$\\
+\hline
+Times($i=4$)&668&909&846&535\\
+\hline
+Times($i=5$)&2216&3090&2974&1828\\
+\hline
+Times($i=6$)&7576&10666&10460&6352\\
+\hline
+Times($i=7$)&26091&36780&36422&22099\\
+\hline
+Times($i=8$)&89216&125163&124563&76119\\
+\hline
+\end{tabular}
+\\
+Where the $wSOR_{1}=\frac{2}{1+\sqrt{1-\rho(I-D^{-1}A)^2}}$, $wSOR_{2}=1$, $wR_{3}=1+\sqrt{1-\rho(I-D^{-1}A)^2}$\
+Still, We do not spot a better convergence in the table than the given $w=\frac{2}{1+\sqrt{1-\rho(I-D^{-1}A)^2}}$ in class while obeying the Rule in PPT. However if we implement $w=3$ we will need less iteration but this may not convergent in other matrix. Also, we can see that when $w=1$, SOR method is equals to Gauss-Seidel Method.\\
+
+\item Verify the Shern-Morrison-Woodbury formula. If $\widetilde{\mathbf{A}} = \mathbf{A} + \mathbf{uw}^{T}$, then
+$$
+\widetilde{\mathbf{A}}^{-1} = \mathbf{A}^{-1} - \frac{1}{1+\mathbf{w}^{T} \mathbf{A}^{-1} \mathbf{u}} \mathbf{A}^{-1} \mathbf{u w}^{T} \mathbf{A}^{-1}
+$$\
+Proof:
+First we construct the formula:\
+\begin{align*}
+(I_n+\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T})(I_n-\frac{\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}})
+\end{align*}\
+Then we verify this formulary equals to $\mathbf{I}$
+\begin{align*}
+&(I_n+\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T})(I_n-\frac{\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}})\\
+&=I_n + \mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}- \frac{\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}}-
+\frac{(\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T})^2}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}}\\
+&=I_n + \mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}- \frac{\mathbf{A}^{-1}\mathbf{u}(I + \mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u} )\mathbf{w}^{T}}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}}\\
+&=I_n
+\end{align*}\
+Hence,
+\begin{align*}
+(I_n+\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T})^{-1}=(I_n-\frac{\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}})
+\end{align*}\
+Note that $\widetilde{\mathbf{A}}^{-1}=A\cdot (I_n+\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T})$, therefore:\
+\begin{align*}
+\widetilde{\mathbf{A}}^{-1}&=(I_n+\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T})^{-1}\cdot \mathbf{A}^{-1}\\
+&=(I_n-\frac{\mathbf{A}^{-1}\mathbf{u}\mathbf{w}^{T}}{I_n+\mathbf{w}^{T}\mathbf{A}^{-1}\mathbf{u}})\cdot \mathbf{A}^{-1}\\
+&=\mathbf{A}^{-1} - \frac{1}{1+\mathbf{w}^{T} \mathbf{A}^{-1} \mathbf{u}} \mathbf{A}^{-1} \mathbf{u w}^{T} \mathbf{A}^{-1}\\
+\end{align*}\
+\
+
+\item Consider
+\vskip -20pt
+\begin{align*}
+x_{1}^{2} + x_{2}^{2} &= 1 \\
+(x_{1}-1)^{2} + x_{2}^{2} & =1
+\end{align*}
+\begin{enumerate}
+\item Implement Newton's Method and find all solutions.
+\item Implement Broyden I Method and use $B_{0} = I$ to find all solutions.
+\item Implement Broyden II Method and use $H_{0} = I$ to find all solutions.
+\end{enumerate}
+\begin{center}
+\bf{Table 4-1 Result and Iteration times when $x0=(1,1)^T$}
+\end{center}
+\tabcolsep0.115in
+\begin{tabular}{|c|c|c|c|}
+\hline
+$Method$&$Newton$&$Broyden I$&$Broyden II$\\
+\hline
+$x1$&0.500000000000000&0.500000000000000&0.500000000000000\\
+\hline
+$x2$&0.866025403784439&0.866025403784439&0.866025403784439\\
+\hline
+$times$&5&12&12\\
+\hline
+\end{tabular}
+\\
+\begin{center}
+\bf{Table 4-2 Result and Iteration times when $x0=(1,-1)^T$}
+\end{center}
+\tabcolsep0.10in
+\begin{tabular}{|c|c|c|c|}
+\hline
+$Method$&$Newton$&$Broyden I$&$Broyden II$\\
+\hline
+$x1$&0.500000000000000&0.500000000000000&0.500000000000000\\
+\hline
+$x2$&-0.866025403784439&-0.866025403784439&-0.866025403784439\\
+\hline
+$times$&5&9&9\\
+\hline
+\end{tabular}
+\\
+Also, when use $x0=(0,0)^T$ or $x0=(1,0)^T$, there will be errors.
+\end{enumerate}
+
+\end{document}
